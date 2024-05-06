@@ -1,4 +1,4 @@
-# PERSONNEL API
+# JWT Permissions
 
 ### ERD:
 
