@@ -34,6 +34,7 @@ app.use(require('cookie-session')({ secret: process.env.SECRET_KEY }))
 app.use(require('./src/middlewares/findSearchSortPage'))
 
 // Login/Logout Control Middleware 
+/*
 app.use(async (req, res, next) => {
 
     const Personnel = require('./src/models/personnel.model')
@@ -53,7 +54,10 @@ app.use(async (req, res, next) => {
 
     next()
 })
+*/
 
+//* Moved -> middlewares/authentication.js
+/*
 const jwt = require('jsonwebtoken')
 
 app.use((req, res, next) => {
@@ -75,6 +79,9 @@ app.use((req, res, next) => {
     })
     next()
 })
+*/
+app.use(require('./src/middlewares/authentication'))
+
 
 /*----------------*/
 //Routes
