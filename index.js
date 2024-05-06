@@ -54,6 +54,28 @@ app.use(async (req, res, next) => {
     next()
 })
 
+const jwt = require('jsonwebtoken')
+
+app.use((req, res, next) => {
+
+    const auth = req.headers?.authorization || null // get Authorization 
+    const accessToken = auth ? auth.split(' ')[1] : null // get JWT 
+
+    req.isLogin = false
+
+    jwt.verify(accessToken, process.env.ACCESS_KEY, function (err, user) {
+        if (err) {
+            req.user = null
+            console.log('JWT Login: NO')
+        } else {
+            req.isLogin = true
+            req.user = user
+            console.log('JWT Login: YES')
+        }
+    })
+    next()
+})
+
 /*----------------*/
 //Routes
 
@@ -62,8 +84,9 @@ app.all('/', (req, res) => {
     res.send({
         error: false,
         message: 'Welcome to PERSONNEL API',
-        session: req.session,
-        isLogin: req.isLogin
+        // session: req.session,
+        isLogin: req.isLogin,
+        user: req.user
     })
 })
 
