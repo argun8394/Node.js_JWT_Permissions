@@ -1,5 +1,5 @@
 "use strict"
-/* ------------------------------------------------------- */
+/* ---------------------------------------------------- */
 // Middleware: permissions
 
 module.exports = {
@@ -27,6 +27,7 @@ module.exports = {
     isAdminOrLead: (req, res, next) => {
 
         const departmentId = req.params?.id || null
+
         if (
             req.user &&
             (req.user.isAdmin || (req.user.isLead && req.user.departmentId == departmentId))
