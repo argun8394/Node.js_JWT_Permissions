@@ -1,5 +1,5 @@
 "use strict"
-
+/* --------------------------------------------------- */
 const router = require('express').Router()
 /* ------------------------------------------------------- */
 
@@ -10,7 +10,7 @@ const permissions = require('../middlewares/permissions')
 
 router.route('/')
     .get(permissions.isLogin, department.list)
-    .post(department.create)
+    .post(permissions.isAdmin, department.create)
 
 router.route('/:id')
     .get(permissions.isAdminOrLead, department.read)
@@ -18,8 +18,7 @@ router.route('/:id')
     .patch(permissions.isAdminOrLead, department.update)
     .delete(permissions.isAdmin, department.delete)
 
-//Calling personnels from a specific department
-router.get('/:id/personnels', permissions.isAdminOrLead, department.personnels) //http://127.0.0.1:8000/departments/6601812d8ae721b1a4efffb2/personnels
+router.get('/:id/personnels', permissions.isAdminOrLead, department.personnels)
 
 /* ------------------------------------------------------- */
 module.exports = router
